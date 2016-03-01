@@ -1,8 +1,9 @@
+# THIS IS CURRENTLY A WIP. PLEASE WAIT TILL 1.0 RELEASE TO USE IN PRODUCTION.
+
+
 # Outbrain::Api
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/outbrain/api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A simple wrapper for the outbrain api.
 
 ## Installation
 
@@ -32,7 +33,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/outbrain-api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/simplereach/outbrain-api.
 
 
 ## License
