@@ -1,4 +1,5 @@
 require "outbrain/api/publisher"
+require "outbrain/api/budget"
 
 module Outbrain
   module Api
@@ -7,19 +8,16 @@ module Outbrain
 
       PATH = 'marketers'
 
-      def initialize(attributes)
-        attributes.each do |key, value|
-          self.send("#{key}=", value)
-        end
-        self
-      end
-
       def self.all
         Request.all(PATH, { as: self })
       end
 
       def self.create(*)
         raise EndpointNotAvialable.new('Marketers can not be created via the api.')
+      end
+
+      def budgets
+        Budget.find_by(marketer_id: id)
       end
     end
   end

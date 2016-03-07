@@ -35,7 +35,7 @@ module Outbrain
 
       @temp_api.basic_auth user_name, user_password
       response = @temp_api.get("/amplify/#{api_version}/login")
-      @token = JSON.parse(response.body)[HEADER_AUTH_KEY]
+      @token = JSON.parse(response.body)[Outbrain::HEADER_AUTH_KEY]
       # need to raise error here if token does not exist
     end
 
@@ -48,7 +48,7 @@ module Outbrain
         faraday.response :logger if logging
         faraday.adapter  Faraday.default_adapter
         faraday.headers['Content-Type'] = 'application/json'
-        faraday.headers[HEADER_AUTH_KEY] = token
+        faraday.headers[Outbrain::HEADER_AUTH_KEY] = token
       end
     end
   end

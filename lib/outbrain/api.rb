@@ -7,9 +7,8 @@ require "outbrain/base"
 require "outbrain/request"
 
 # models
-# Dir["outbrain/api/*.rb"].each {|file| require file }:w
-
 require "outbrain/api/marketer"
+require "outbrain/api/campaign"
 
 module Outbrain
   HEADER_AUTH_KEY = 'OB-TOKEN-V1'
