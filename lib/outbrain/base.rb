@@ -18,7 +18,7 @@ module Outbrain
     end
 
     def valid?
-      errors.emtpy?
+      errors.empty?
     end
 
     def persisted?
