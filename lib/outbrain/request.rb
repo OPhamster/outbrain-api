@@ -17,6 +17,21 @@ module Outbrain
       where(resource, {}, options)
     end
 
+    def self.find(resource_path, id, options={})
+      response = api.get("/amplify/#{api_version}/#{resource_path}/#{id}")
+      json_body = JSON.parse(response.body)
+
+      fail InvalidOption 'requires an as option' unless options[:as]
+
+      if response.status == 200
+        options[:as].new(json_body)
+      else
+        a = options[:as].new
+        a.errors.push(json_body)
+        a
+      end
+    end
+
     def self.create(resource, options={})
       attributes = options.fetch(:attributes, {})
 
