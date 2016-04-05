@@ -7,7 +7,7 @@ module Outbrain
       end
 
       def self.create(attributes)
-        Request.create(path(attributes.fetch(:marketer_id)), {as: self, attributes: attributes})
+        Request.create(path(attributes.delete(:marketer_id)), {as: self, attributes: attributes})
       end
 
       def self.find_by(attributes={})
