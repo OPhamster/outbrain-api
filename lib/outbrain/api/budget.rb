@@ -3,7 +3,11 @@ module Outbrain
     class Budget < Base
 
       def self.path(id)
-        "/marketers/#{id}/budgets"
+        "marketers/#{id}/budgets"
+      end
+
+      def self.create(attributes)
+        Request.create(path(attributes.fetch(:marketer_id)), {as: self, attributes: attributes})
       end
 
       def self.find_by(attributes={})
