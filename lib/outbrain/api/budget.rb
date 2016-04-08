@@ -1,6 +1,7 @@
 module Outbrain
   module Api
     class Budget < Base
+      PATH='budgets'
 
       def self.path(id)
         "marketers/#{id}/budgets"
@@ -8,6 +9,10 @@ module Outbrain
 
       def self.create(attributes)
         Request.create(path(attributes.delete(:marketer_id)), {as: self, attributes: attributes})
+      end
+
+      def self.find(budget_id)
+        Request.find(PATH, budget_id, { as: self })
       end
 
       def self.find_by(attributes={})
