@@ -1,6 +1,7 @@
 require "outbrain/api/publisher"
 require "outbrain/api/budget"
 require "outbrain/api/report"
+require "outbrain/api/campaign_report"
 
 module Outbrain
   module Api
@@ -21,11 +22,11 @@ module Outbrain
         Budget.find_by(marketer_id: id)
       end
 
-      def campaign_reports(from, to)
+      def campaign_reports(options = {})
+        from = options.fetch(:from)
+        to = options.fetch(:to)
         CampaignReport.where(id, from, to)
       end
-
-      class CampaignReport < Report; end
     end
   end
 end

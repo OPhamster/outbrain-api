@@ -1,6 +1,5 @@
 module Outbrain
   class Request < Config
-
     def self.where(resource_path, query={}, options={})
       request_path = "/amplify/#{api_version}/#{resource_path}"
       query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
