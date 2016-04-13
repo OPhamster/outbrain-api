@@ -23,9 +23,7 @@ module Outbrain
       end
 
       def campaign_reports(options = {})
-        from = options.fetch(:from)
-        to = options.fetch(:to)
-        CampaignReport.where(id, from, to)
+        CampaignReport.where(options.merge({marketer_id: id}))
       end
     end
   end

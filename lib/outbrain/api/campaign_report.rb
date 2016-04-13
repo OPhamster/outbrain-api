@@ -5,12 +5,12 @@ module Outbrain
     class CampaignReport < Report
       PATH = 'performanceByCampaign'
 
-      def self.path(id)
-        "marketers/#{id}/#{PATH}"
+      def self.path(marketer_id)
+        "marketers/#{marketer_id}/#{PATH}"
       end
 
-      def self.where(id, from, to)
-        super(self.path(id), from, to)
+      def self.where(options = {})
+        super(options.merge({path: self.path(options.fetch(:marketer_id))}))
       end
     end
   end
