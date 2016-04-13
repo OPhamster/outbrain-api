@@ -2,14 +2,21 @@ module Outbrain
   class Request < Config
 
     def self.where(resource_path, query={}, options={})
-      response = api.get("/amplify/#{api_version}/#{resource_path}")
+      request_path = "/amplify/#{api_version}/#{resource_path}"
+      query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
+      request_path = request_path + '?' + query_string unless query_string.empty?
+      response = api.get(request_path)
       resource_name = options.fetch(:resource_name, resource_path)
       json_body = JSON.parse(response.body) # catch and raise proper api error
 
       fail InvalidOption 'requires an as option' unless options[:as]
 
-      json_body[resource_name].map do |obj|
-        options[:as].new(obj)
+      if response.status == 200
+        json_body[resource_name].map do |obj|
+          options[:as].new(obj)
+        end
+      else
+        [json_body]
       end
     end
 
