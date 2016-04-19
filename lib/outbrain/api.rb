@@ -9,6 +9,9 @@ require "outbrain/request"
 # models
 require "outbrain/api/marketer"
 require "outbrain/api/campaign"
+require "outbrain/api/budget"
+require "outbrain/api/campaign_report"
+require "outbrain/api/publisher_report"
 
 module Outbrain
   HEADER_AUTH_KEY = 'OB-TOKEN-V1'
