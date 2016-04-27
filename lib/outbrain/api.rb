@@ -12,6 +12,7 @@ require "outbrain/api/campaign"
 require "outbrain/api/budget"
 require "outbrain/api/campaign_report"
 require "outbrain/api/publisher_report"
+require "outbrain/api/campaign_by_day_report"
 
 module Outbrain
   HEADER_AUTH_KEY = 'OB-TOKEN-V1'
