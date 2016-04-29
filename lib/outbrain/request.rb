@@ -6,11 +6,16 @@ module Outbrain
       request_path = request_path + '?' + query_string unless query_string.empty?
       response = api.get(request_path)
       resource_name = options.fetch(:resource_name, resource_path)
+      meta_requests = options.fetch(:meta)
+      # meta_requests = ["totalDataCount"]
       json_body = JSON.parse(response.body) # catch and raise proper api error
 
       fail InvalidOption 'requires an as option' unless options[:as]
 
       if response.status == 200
+        meta_requests.each do |field|
+          options[:as].define_singleton_method(field.to_sym) { json_body[field] }
+        end
         json_body[resource_name].map do |obj|
           options[:as].new(obj)
         end
