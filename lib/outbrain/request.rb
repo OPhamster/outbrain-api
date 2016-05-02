@@ -12,9 +12,9 @@ module Outbrain
       fail InvalidOption 'requires an as option' unless options[:as]
 
       if response.status == 200
-        meta_requests.each{|field| options[:as].define_singleton_method(field.to_sym) { json_body[field] } }
-        json_body[resource_name].map do |obj|
-          options[:as].new(obj)
+        Outbrain::Api::Relation.new.tap do |r|
+          meta_requests.each{ |field| r.send("#{field}=", json_body[field]) }
+          r.relations = json_body[resource_name].map{ |obj| options[:as].new(obj) }
         end
       else
         [json_body]
