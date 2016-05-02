@@ -6,13 +6,15 @@ module Outbrain
       request_path = request_path + '?' + query_string unless query_string.empty?
       response = api.get(request_path)
       resource_name = options.fetch(:resource_name, resource_path)
+      meta_requests = options.fetch(:meta_resource_names)
       json_body = JSON.parse(response.body) # catch and raise proper api error
 
       fail InvalidOption 'requires an as option' unless options[:as]
 
       if response.status == 200
-        json_body[resource_name].map do |obj|
-          options[:as].new(obj)
+        Outbrain::Api::Relation.new.tap do |r|
+          meta_requests.each{ |field| r.send("#{field}=", json_body[field]) }
+          r.relations = json_body[resource_name].map{ |obj| options[:as].new(obj) }
         end
       else
         [json_body]

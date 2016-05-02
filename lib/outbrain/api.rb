@@ -7,6 +7,7 @@ require "outbrain/base"
 require "outbrain/request"
 
 # models
+require "outbrain/api/relation"
 require "outbrain/api/marketer"
 require "outbrain/api/campaign"
 require "outbrain/api/budget"
