@@ -54,5 +54,19 @@ module Outbrain
         a
       end
     end
+
+    def self.update(resource_path, id, options={})
+      attributes = options.fetch(:attributes, {})
+      response = api.put("/amplify/#{api_version}/#{resource_path}/#{id}", attributes.to_json)
+      json_body = JSON.parse(response.body)
+
+      if response.status == 200
+        options[:as].new(json_body)
+      else
+        a = options[:as].new
+        a.errors.push(json_body)
+        a
+      end
+    end
   end
 end
