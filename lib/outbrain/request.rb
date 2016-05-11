@@ -17,7 +17,9 @@ module Outbrain
           r.relations = json_body[resource_name].map{ |obj| options[:as].new(obj) }
         end
       else
-        [json_body]
+        Outbrain::Api::Relation.new.tap do |r|
+          r.errors << json_body
+        end
       end
     end
 
