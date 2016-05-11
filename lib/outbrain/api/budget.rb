@@ -24,6 +24,10 @@ module Outbrain
       def create_campaign(attributes)
         Campaign.create(attributes.merge(budgetId: id))
       end
+
+      def self.update(budget_id, attributes)
+        Request.update(PATH, budget_id, {as: self, attributes: attributes })
+      end
     end
   end
 end
