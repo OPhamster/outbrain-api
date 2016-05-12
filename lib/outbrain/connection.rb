@@ -44,7 +44,7 @@ module Outbrain
     end
 
     def refresh_api
-      @api = Faraday.new(:url => @base_url) do |faraday|
+      @api = Faraday.new(:url => base_url) do |faraday|
         faraday.response :logger if logging
         faraday.adapter  Faraday.default_adapter
         faraday.headers['Content-Type'] = 'application/json'

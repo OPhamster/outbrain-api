@@ -2,7 +2,7 @@ module Outbrain
   module Api
     class Relation
       include Enumerable
-      attr_accessor :relations, :errors, :totalDataCount, :overAllMetrics, :aggregatedBy, :details, :overallMetrics
+      attr_accessor :relations, :errors, :totalDataCount, :totalCount, :overAllMetrics, :aggregatedBy, :details, :overallMetrics
 
       def initialize(options = {})
         @relations = []

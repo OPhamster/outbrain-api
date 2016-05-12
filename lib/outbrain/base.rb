@@ -24,5 +24,9 @@ module Outbrain
     def persisted?
       try(:id).present?
     end
+
+    def extract_query_options(options, query_keys)
+      options.partition{|option, v| query_keys.include?(option) && !v.nil?}
+    end
   end
 end

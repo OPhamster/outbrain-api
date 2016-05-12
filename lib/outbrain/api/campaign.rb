@@ -14,12 +14,6 @@ module Outbrain
       def self.update(campaign_id, attributes)
         Request.update(PATH, campaign_id, {as: self, attributes: attributes })
       end
-
-      def self.promoted_links(campaign_id, options={})
-        Request
-        .where("#{PATH}/#{campaign_id}/promotedLinks",
-          options, {as: self, meta_resource_names: [], resource_name: "promotedLinks"})
-      end
     end
   end
 end
