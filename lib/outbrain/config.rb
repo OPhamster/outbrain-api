@@ -1,7 +1,5 @@
 module Outbrain
   class Config
-    BASE = Outbrain::Connection::BASE
-
     @@api = nil
     @@api_version = nil
 

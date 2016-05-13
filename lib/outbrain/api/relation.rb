@@ -1,20 +1,21 @@
 module Outbrain
   module Api
-    class Relation
+    class Relation < OpenStruct
       include Enumerable
-      attr_accessor :relations, :errors, :totalDataCount, :overAllMetrics, :aggregatedBy, :details, :overallMetrics
-
+      extend Forwardable
+      def_delegator :relations, :each, :each
       def initialize(options = {})
-        @relations = []
-        @errors = []
+        super
+        self.errors = []
+        relation = options.delete(options[:relation_name])
+        Hashie::Mash.new(options).each{ |k,v| self[k] = v }
+        setup_relations(relation)
       end
 
-      def each &block
-        @relations.each{|relation| block.call(relation) }
-      end
+      private
 
-      def any?
-        relations.any?
+      def setup_relations(relation)
+        self.relations = relation.map { |e| relation_class.new(e) }
       end
     end
   end

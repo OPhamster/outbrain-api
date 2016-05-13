@@ -4,15 +4,9 @@ module Outbrain
   module Api
     class CampaignByDayReport < Report
       PATH = 'performanceByDay'
-
-      def self.path(campaign_id)
-        "campaigns/#{campaign_id}/#{PATH}"
-      end
-
-      def self.where(options = {})
-        super(options.merge({path: self.path(options.fetch(:campaign_id))}))
+      def self.path(options)
+        "campaigns/#{options.fetch(:campaign_id)}/#{PATH}/"
       end
     end
   end
 end
-
