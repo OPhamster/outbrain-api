@@ -6,7 +6,7 @@ module Outbrain
       PATH="promotedLinks"
 
       def self.path(options)
-        "campaigns/#{options.fetch(:campaign_id)}/promotedLinks"
+        "campaigns/#{options.fetch(:campaign_id)}/#{PATH}"
       end
 
       def self.resource_name
