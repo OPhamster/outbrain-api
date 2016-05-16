@@ -54,10 +54,12 @@ module Outbrain
 
     def self.update(resource_path, id, options={})
       attributes = options.fetch(:attributes, {})
+      wrap_response = options.fetch(:wrap_response, true)
       response = api.put("#{resource_path}/#{id}", attributes.to_json)
+      success = (response.status == 200)
+      return success  unless wrap_response
       json_body = JSON.parse(response.body)
-
-      if response.status == 200
+      if success
         options[:as].new(json_body)
       else
         a = options[:as].new
