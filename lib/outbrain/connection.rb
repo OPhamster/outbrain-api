@@ -12,7 +12,7 @@ module Outbrain
       @user_name = args[:user_name] || args['user_name']
       @user_password = args[:user_password] || args['user_password']
       @api_version = args[:api_version] || args['api_version'] || DEFAULT_API_VERSION
-      @logging = args[:logging] || args['logging'] || true # (default right now)
+      @logging = (args.key?(:logging) || args.key?('logging')) ? (args[:logging] || args['logging']) : true # (default right now)
       @base_url = args[:base_url] || "#{BASE}/amplify/#{api_version}/"
       get_token! unless @token
       # should raise if not authenticated properly
