@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/simplereach/outbrain-api/badges/gpa.svg)](https://codeclimate.com/github/simplereach/outbrain-api)
+
 # THIS IS CURRENTLY A WIP.
 # PLEASE WAIT TILL 1.0 RELEASE TO USE IN PRODUCTION.
 
