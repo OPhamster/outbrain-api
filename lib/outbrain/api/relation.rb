@@ -15,6 +15,7 @@ module Outbrain
       private
 
       def setup_relations(relation)
+        relation ||= [] # if nil still want array
         self.relations = relation.map { |e| relation_class.new(e) }
       end
     end
