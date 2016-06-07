@@ -1,16 +1,11 @@
 module Outbrain
   class Request < Config
     def self.where(resource_path, query={}, options={})
-      request_path = resource_path
-      query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
-      request_path = request_path + '?' + query_string unless query_string.empty?
-      response = api.get(request_path)
-      resource_name = options.fetch(:resource_name, resource_path)
-      json_body = JSON.parse(response.body) # catch and raise proper api error
-
       fail InvalidOption 'requires an as option' unless options[:as]
+      json_body, status = get_json(resource_path, query)
 
-      if response.status == 200
+      if status == 200
+        resource_name = options.fetch(:resource_name, resource_path)
         Outbrain::Api::Relation
           .new(json_body.merge(relation_class: options[:as], relation_name: resource_name))
       else
@@ -34,6 +29,17 @@ module Outbrain
         a = options[:as].new
         a.errors.push(json_body)
         a
+      end
+    end
+
+    ## For api methods that return arrays without a root element or meta info
+    def self.search(path, query={}, options={})
+      json_body, status = get_json(path, query)
+      resource_class = options.fetch(:as)
+      if status == 200
+        json_body.map{|e| resource_class.new(e)}
+      else
+        Outbrain::Api::Relation.new(errors: json_body)
       end
     end
 
@@ -66,6 +72,13 @@ module Outbrain
         a.errors.push(json_body)
         a
       end
+    end
+
+    def self.get_json(root_path, query)
+      query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
+      path = query_string.empty? ? root_path : "#{root_path}?#{query_string}"
+      response = api.get(path)
+      [JSON.parse(response.body), response.status] # catch and raise proper api error
     end
   end
 end
