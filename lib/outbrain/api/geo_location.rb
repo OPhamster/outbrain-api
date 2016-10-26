@@ -3,7 +3,7 @@ module Outbrain
     class GeoLocation < Base
       PATH='locations/search'
 
-      def self.search(query, limit = 10)
+      def self.search(query, limit = 80)
         options = {term: query, limit: limit}
         Request.search(PATH, options, as: self)
       end
