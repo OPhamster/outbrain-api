@@ -17,6 +17,16 @@ module Outbrain
       where(resource, {}, options)
     end
 
+    #token retrieval
+    def self.get(resource, attributes)
+      user_name = attributes["user_name"] || attributes[:user_name]
+      user_password = attributes["user_password"] || attributes[:user_password]
+      api.basic_auth user_name, user_password
+
+      response = api.get(resource)
+      json_body = JSON.parse(response.body)
+    end
+
     def self.find(resource_path, id, options={})
       response = api.get("#{resource_path}/#{id}")
       json_body = JSON.parse(response.body)
