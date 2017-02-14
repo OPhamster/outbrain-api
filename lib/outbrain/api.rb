@@ -17,6 +17,7 @@ require "outbrain/api/campaign_by_day_report"
 require "outbrain/api/promoted_link_performance_report"
 require "outbrain/api/promoted_link"
 require "outbrain/api/geo_location"
+require "outbrain/api/token"
 
 module Outbrain
   HEADER_AUTH_KEY = 'OB-TOKEN-V1'
