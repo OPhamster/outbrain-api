@@ -10,7 +10,7 @@ module Outbrain
       }.freeze
 
       def self.path(options)
-        "campaigns/#{options.fetch(:campaign_id)}/#{PATH}/"
+        "reports/marketers/#{options.fetch(:marketer_id)}/content"
       end
 
       # From, to fields need to be given

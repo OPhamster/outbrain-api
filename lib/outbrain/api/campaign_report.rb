@@ -3,14 +3,14 @@ require 'outbrain/api/report'
 module Outbrain
   module Api
     class CampaignReport < Report
-      PATH = 'performanceByCampaign'.freeze
+      PATH = 'campaigns'.freeze
       DEFAULT_OPTIONS = {
         includeArchived: true,
         includeConversionDetails: true
       }.freeze
 
       def self.path(options)
-        "marketers/#{options.fetch(:marketer_id)}/#{PATH}/"
+        "reports/marketers/#{options.fetch(:marketer_id)}/#{PATH}/"
       end
 
       # From, to fields need to be given

@@ -20,10 +20,11 @@ module Outbrain
         raise 'Marketer id required' unless options.key?(:marketer_id)
         options.merge!(DEFAULT_OPTIONS) { |_k, v1, v2| v1 || v2 }
         request.where(marketer_path(options[:marketer_id]),
-                      options.merge(as: self))
+                      options,
+                      as: self)
       end
 
-      def marketer_path(marketer_id)
+      def self.marketer_path(marketer_id)
         "marketers/#{marketer_id}/#{PATH}"
       end
 
@@ -42,14 +43,14 @@ module Outbrain
       # From/to param needs to supplied
       def promoted_link_reports(request, options = {})
         offset = 0
-        limit = 1000
+        limit = 50
         response = []
         loop do
           options[:offset] = offset
           options[:limit] = limit
           page = PromotedLinkReport.where(
             request, options.merge(campaign_id: id)
-          )
+          ).promoted_link_reports.to_a
           response.concat(page)
           break if page.blank? || page.size < limit
           offset += limit
@@ -59,12 +60,13 @@ module Outbrain
 
       def promoted_links(request, options = {})
         offset = 0
-        limit = 1000
+        limit = 50
         response = []
         loop do
           options[:offset] = offset
           options[:limit] = limit
           page = PromotedLink.where(request, options.merge(campaign_id: id))
+                             .promoted_links.to_a
           response.concat(page)
           break if page.blank? || page.size < limit
           offset += limit

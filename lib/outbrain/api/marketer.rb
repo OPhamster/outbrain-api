@@ -27,12 +27,14 @@ module Outbrain
       # From/to needs to be supplied
       def campaign_reports(request, options = {})
         offset = 0
-        limit = 1000
+        limit = 50
         response = []
         loop do
           options[:offset] = offset
           options[:limit] = limit
           page = CampaignReport.where(request, options.merge(marketer_id: id))
+                               .campaign_reports
+                               .to_a
           response.concat(page)
           break if page.blank? || page.size < limit
           offset += limit
@@ -49,12 +51,14 @@ module Outbrain
       # https://amplifyv01.docs.apiary.io/#reference/campaigns/campaigns-collection-via-marketer/list-all-campaigns-associated-with-a-marketer?console=1
       def campaigns(request, options = {})
         offset = 0
-        limit = 1000
+        limit = 50
         response = []
         loop do
           options[:offset] = offset
           options[:limit] = limit
           page = Campaign.where(request, options.merge(marketer_id: id))
+                         .campaigns
+                         .to_a
           response.concat(page)
           break if page.blank? || page.size < limit
           offset += limit

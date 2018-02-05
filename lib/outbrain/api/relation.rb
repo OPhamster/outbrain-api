@@ -12,6 +12,14 @@ module Outbrain
         setup_relations(relation)
       end
 
+      def to_a
+        arr = []
+        each do |o|
+          arr << o
+        end
+        return arr
+      end
+
       private
 
       def setup_relations(relation)

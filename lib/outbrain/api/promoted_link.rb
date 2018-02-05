@@ -8,7 +8,7 @@ module Outbrain
       DEFAULT_OPTIONS = {
         enabled: true,
         statuses: 'APPROVED,PENDING,REJECTED',
-        limit: 1000,
+        limit: 50,
         promotedLinkImageWidth: 100,
         promotedLinkImageHeight: 100
       }.freeze
