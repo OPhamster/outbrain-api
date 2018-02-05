@@ -3,9 +3,9 @@ module Outbrain
     class GeoLocation < Base
       PATH='locations/search'
 
-      def self.search(query, limit = 50, exclude = "PostalCode")
+      def self.search(request, query, limit = 50, exclude = "PostalCode")
         options = {term: query, limit: limit, exclude: exclude}
-        Request.search(PATH, options, as: self)
+        request.search(PATH, options, as: self)
       end
     end
   end

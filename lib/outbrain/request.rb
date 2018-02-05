@@ -1,6 +1,10 @@
 module Outbrain
   class Request < Config
-    def self.where(resource_path, query={}, options={})
+    def initialize(api, api_version)
+      super(api, api_version)
+    end
+
+    def where(resource_path, query={}, options={})
       fail InvalidOption 'requires an as option' unless options[:as]
       json_body, status = get_json(resource_path, query)
 
@@ -13,12 +17,12 @@ module Outbrain
       end
     end
 
-    def self.all(resource, options={})
+    def all(resource, options={})
       where(resource, {}, options)
     end
 
     #token retrieval
-    def self.get(resource, attributes)
+    def get(resource, attributes)
       user_name = attributes["user_name"] || attributes[:user_name]
       user_password = attributes["user_password"] || attributes[:user_password]
       api.basic_auth user_name, user_password
@@ -27,7 +31,7 @@ module Outbrain
       json_body = JSON.parse(response.body)
     end
 
-    def self.find(resource_path, id, options={})
+    def find(resource_path, id, options={})
       response = api.get("#{resource_path}/#{id}")
       json_body = JSON.parse(response.body)
 
@@ -43,7 +47,7 @@ module Outbrain
     end
 
     ## For api methods that return arrays without a root element or meta info
-    def self.search(path, query={}, options={})
+    def search(path, query={}, options={})
       json_body, status = get_json(path, query)
       resource_class = options.fetch(:as)
       if status == 200
@@ -53,7 +57,7 @@ module Outbrain
       end
     end
 
-    def self.create(resource, options={})
+    def create(resource, options={})
       attributes = options.fetch(:attributes, {})
 
       response = api.post("#{resource}", attributes.to_json)
@@ -68,7 +72,7 @@ module Outbrain
       end
     end
 
-    def self.update(resource_path, id, options={})
+    def update(resource_path, id, options={})
       attributes = options.fetch(:attributes, {})
       wrap_response = options.fetch(:wrap_response, true)
       response = api.put("#{resource_path}/#{id}", attributes.to_json)
@@ -84,7 +88,7 @@ module Outbrain
       end
     end
 
-    def self.get_json(root_path, query)
+    def get_json(root_path, query)
       query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
       path = query_string.empty? ? root_path : "#{root_path}?#{query_string}"
       response = api.get(path)

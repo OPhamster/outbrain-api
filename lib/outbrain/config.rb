@@ -1,31 +1,11 @@
 module Outbrain
   class Config
-    @@api = nil
-    @@api_version = nil
+    attr_reader :api
+    attr_reader :api_version
 
-    def self.api=(api)
-      @@api = api
-    end
-
-    def self.api_version=(api_version)
-      @@api_version = api_version
-    end
-
-    private
-    def self.api
-      @@api
-    end
-
-    def api
-      self.class.api
-    end
-
-    def api_version
-      self.class.api_version
-    end
-
-    def self.api_version
-      @@api_version
+    def initialize(api, api_version)
+      @api = api
+      @api_version = api_version
     end
   end
 end

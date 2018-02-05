@@ -3,9 +3,9 @@ module Outbrain
     class Token < Base
       PATH  = "login"
 
-      def self.fetch(user_name, user_password)
+      def self.fetch(request, user_name, user_password)
         credentials = {user_name: user_name, user_password: user_password}
-        token = Request.get(PATH, credentials)
+        token = request.get(PATH, credentials)
       end
     end
   end

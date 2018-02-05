@@ -8,12 +8,14 @@ module Outbrain
     include Hashie::Extensions::Coercion
 
     attr_accessor :errors
+    attr_accessor :request
 
     def initialize(attributes={})
       attributes.each do |key, value|
         self.send("#{key}=", value)
       end
       @errors = attributes.fetch(:errors, [])
+      @request = nil
       self
     end
 

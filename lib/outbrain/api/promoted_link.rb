@@ -3,29 +3,50 @@ require 'outbrain/api/report'
 module Outbrain
   module Api
     class PromotedLink < Base
-      PATH = "promotedLinks"
+      PATH = 'promotedLinks'.freeze
       RESOURCE_NAME = PATH
+      DEFAULT_OPTIONS = {
+        enabled: true,
+        statuses: 'APPROVED,PENDING,REJECTED',
+        limit: 1000,
+        promotedLinkImageWidth: 100,
+        promotedLinkImageHeight: 100
+      }.freeze
 
       def self.campaign_path(campaign_id)
         "campaigns/#{campaign_id}/#{PATH}"
       end
 
-      def self.create(attributes)
-        Request.create(campaign_path(attributes.delete(:campaign_id)),
-          { as: self, attributes: attributes })
+      def self.create(request, attributes)
+        request.create(campaign_path(attributes.delete(:campaign_id)),
+                       as: self, attributes: attributes)
       end
 
-      def self.find(id)
-        Request.find( PATH, id, { as: self })
+      def self.find(request, id)
+        request.find(PATH, id, as: self)
       end
 
-      def self.where(options)
-        Request.where(campaign_path(options.fetch(:campaign_id)),
-          options, as: self, resource_name: RESOURCE_NAME)
+      # Refer to
+      # https://amplifyv01.docs.apiary.io/#reference/promotedlinks/promotedlinks-collection/list-promotedlinks-for-campaign
+      # Options can be one of:
+      # enabled:true/false
+      # statuses=APPROVED,PENDING,REJECTED
+      # limit=limit
+      # offset=offset
+      # sort=sort
+      # promotedLinkImageWidth=promotedLinkImageWidth
+      # promotedLinkImageHeight=promotedLinkImageHeight
+      def self.where(request, options)
+        raise 'Campaign id required' unless options.key?(:campaign_id)
+        options.merge!(DEFAULT_OPTIONS) { |_k, v1, v2| v1 || v2 }
+        request.where(campaign_path(options.fetch(:campaign_id)),
+                      options, as: self, resource_name: RESOURCE_NAME)
       end
 
-      def self.update(id, attributes)
-        Request.update(PATH, id, {as: self, attributes: attributes, wrap_response: false })
+      def self.update(request, id, attributes)
+        request.update(
+          PATH, id, as: self, attributes: attributes, wrap_response: false
+        )
       end
     end
   end

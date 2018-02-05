@@ -5,12 +5,12 @@ module Outbrain
         'details'
       end
 
-      def self.where(options = {})
+      def self.where(request, options = {})
         report_options = {
           as: self,
-          resource_name: resource_name,
+          resource_name: resource_name
         }
-        Request.where(self.path(options), options, report_options)
+        request.where(path(options), options, report_options)
       end
     end
   end
