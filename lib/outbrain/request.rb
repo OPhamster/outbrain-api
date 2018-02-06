@@ -8,7 +8,6 @@ module Outbrain
 
     def where(resource_path, query = {}, options = {})
       unless options[:as].present?
-        byebug
         raise InvalidOption, 'requires an as option'
       end
       json_body, status = get_json(resource_path, query)

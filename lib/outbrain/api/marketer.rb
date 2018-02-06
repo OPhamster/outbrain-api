@@ -33,7 +33,7 @@ module Outbrain
           options[:offset] = offset
           options[:limit] = limit
           page = CampaignReport.where(request, options.merge(marketer_id: id))
-                               .campaign_reports
+                               .results
                                .to_a
           response.concat(page)
           break if page.blank? || page.size < limit
@@ -59,6 +59,24 @@ module Outbrain
           page = Campaign.where(request, options.merge(marketer_id: id))
                          .campaigns
                          .to_a
+          response.concat(page)
+          break if page.blank? || page.size < limit
+          offset += limit
+        end
+        return response
+      end
+
+       # From/to param needs to supplied
+      def promoted_link_reports(request, options = {})
+        offset = 0
+        limit = 50
+        response = []
+        loop do
+          options[:offset] = offset
+          options[:limit] = limit
+          page = PromotedLinkReport.where(
+            request, options.merge(marketer_id: id)
+          ).results.to_a
           response.concat(page)
           break if page.blank? || page.size < limit
           offset += limit

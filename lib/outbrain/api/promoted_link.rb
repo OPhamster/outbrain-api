@@ -39,8 +39,9 @@ module Outbrain
       def self.where(request, options)
         raise 'Campaign id required' unless options.key?(:campaign_id)
         options.merge!(DEFAULT_OPTIONS) { |_k, v1, v2| v1 || v2 }
-        request.where(campaign_path(options.fetch(:campaign_id)),
-                      options, as: self, resource_name: RESOURCE_NAME)
+        path = campaign_path(options.fetch(:campaign_id))
+        options.delete(:campaign_id)
+        request.where(path, options, as: self)
       end
 
       def self.update(request, id, attributes)

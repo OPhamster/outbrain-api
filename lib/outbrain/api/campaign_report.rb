@@ -16,7 +16,7 @@ module Outbrain
       # From, to fields need to be given
       def self.where(request, options = {})
         options = options.merge!(DEFAULT_OPTIONS) { |_k, v1, v2| v1 || v2 }
-        super(request, options)
+        super(request, options, as: self, resource_name: 'campaignReport')
       end
     end
   end
