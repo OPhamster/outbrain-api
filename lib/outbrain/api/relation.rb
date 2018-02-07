@@ -15,6 +15,7 @@ module Outbrain
       def to_a
         arr = []
         each do |o|
+          Hashie.symbolize_keys!(o)
           arr << o
         end
         return arr

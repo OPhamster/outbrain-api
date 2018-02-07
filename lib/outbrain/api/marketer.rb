@@ -13,7 +13,9 @@ module Outbrain
       PATH = 'marketers'.freeze
 
       def self.all(request)
-        request.all(PATH, as: self)
+        response = request.all(PATH, as: self)
+        response.each { |m| Hashie.symbolize_keys!(m) }
+        response
       end
 
       def self.create(*)
