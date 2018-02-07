@@ -26,28 +26,28 @@ Or install it yourself as:
 
 ## Usage
 
- ``
- conn = Outbrain::Connection.new(
-      user_name: username, user_password: password, token: token
-    )
+ ```
+   conn = Outbrain::Connection.new(
+        user_name: username, user_password: password, token: token
+      )
 
- req = Outbrain::Request.new(connect.api, connect.api_version)
+   req = Outbrain::Request.new(connect.api, connect.api_version)
 
- # all marketers associated with the user
- marketers = Outbrain::Api::Marketer.all(req).to_a
+   # all marketers associated with the user
+   marketers = Outbrain::Api::Marketer.all(req).to_a
 
- # all campaigns for the marketer
- campaigns = marketers.first.campaigns(req)
+   # all campaigns for the marketer
+   campaigns = marketers.first.campaigns(req)
 
- # all promoted links
- promoted_links = campaigns.first.promoted_links(req)
+   # all promoted links
+   promoted_links = campaigns.first.promoted_links(req)
 
- # all campaign reports
- campaign_reports = markerters.first.campaign_reports(req, { from: '2018-01-01', to: '2018-01-10'})
+   # all campaign reports
+   campaign_reports = markerters.first.campaign_reports(req, { from: '2018-01-01', to: '2018-01-10'})
 
- # all promoted link reports
- promoted_link_reports = markerters.first.promoted_link_reports(req, { from: '2018-01-01', to: '2018-01-10'})
-``
+   # all promoted link reports
+   promoted_link_reports = markerters.first.promoted_link_reports(req, { from: '2018-01-01', to: '2018-01-10'})
+```
 
 ## Development
 
